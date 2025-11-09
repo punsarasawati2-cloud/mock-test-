@@ -1,0 +1,18 @@
+function doPost(e) {
+  const data = JSON.parse(e.postData.contents);
+  const score = data.score;
+  const total = data.total;
+  const rows = data.rows;
+  const message =
+    "Quiz Score: " + score + "/" + total + "\n\n" +
+    rows.map(r => r.join(" | ")).join("\n");
+
+  MailApp.sendEmail({
+    to: "yourEmail@gmail.com", // change to your address
+    subject: "JFT Mock Test Result",
+    body: message
+  });
+
+  return ContentService.createTextOutput(JSON.stringify({ success: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
